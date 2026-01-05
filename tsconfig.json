@@ -3,6 +3,6 @@
   "compilerOptions": {
     "types": ["jest"],
   },
-  "include": ["**/*.ts", "**/*.tsx", "src/redux/store.js", "src/redux/store.js", "src/navigation/AppNavigator.js"],
+  "include": ["**/*.ts", "**/*.tsx", "src/redux/store.js", "src/redux/store.js", "src/navigation/AppNavigator.js", "src/styles/themes.ts"],
   "exclude": ["**/node_modules", "**/Pods"]
 }
