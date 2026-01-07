@@ -8,7 +8,10 @@ function App() {
   return (
     <ThemeProvider>
       <SafeAreaProvider>
-        <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+        <StatusBar 
+           barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+           backgroundColor="transparent" 
+        />
         <RootNavigator />
       </SafeAreaProvider>
     </ThemeProvider>
