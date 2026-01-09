@@ -1,8 +1,8 @@
 import React from "react";
 import { View, Text, TouchableOpacity, FlatList, StyleSheet } from "react-native";
-import { useTheme } from "../context/ThemeContext"; // Theme context import koro
-import Icon from "react-native-vector-icons/MaterialCommunityIcons"; // Icon library
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import { useTheme } from "../context/ThemeContext"; 
+import Icon from "react-native-vector-icons/MaterialCommunityIcons"; 
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const services = [
   { id: "1", name: "Electrician", icon: "lightning-bolt" },
@@ -17,55 +17,56 @@ const services = [
 
 export default function HomeScreen({ navigation }: any) {
   const { theme } = useTheme();
+  const colors = theme.colors; // সহজে ব্যবহারের জন্য
 
   return (
-    <SafeAreaProvider style={[styles.container, { backgroundColor: theme.colors.background.primary }]}>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       {/* Header */}
       <View style={styles.header}>
-        <View style={styles.locationContainer}>
-          <Icon name="map-marker-outline" size={20} color={theme.colors.icon.secondary} />
-          <Text style={[styles.locationText, { color: theme.colors.text.secondary }]}>
+        <View style={[styles.locationContainer, { backgroundColor: colors.foreground, padding: 10, borderRadius: 10 }]}>
+          <Icon name="map-marker-outline" size={20} color={colors.primary} />
+          <Text style={[styles.locationText, { color: colors.textPrimary }]}>
             Downtown, NY
           </Text>
-          <Icon name="chevron-down" size={20} color={theme.colors.icon.secondary} />
+          <Icon name="chevron-down" size={20} color={colors.textSecondary} />
         </View>
         <View style={styles.headerIcons}>
           <TouchableOpacity style={styles.iconButton}>
-            <Icon name="bell-outline" size={24} color={theme.colors.icon.secondary} />
+            <Icon name="bell-outline" size={24} color={colors.textPrimary} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.iconButton}>
-            <Icon name="bookmark-outline" size={24} color={theme.colors.icon.secondary} />
+            <Icon name="bookmark-outline" size={24} color={colors.textPrimary} />
           </TouchableOpacity>
         </View>
       </View>
 
       {/* Search Bar */}
-      <View style={[styles.searchContainer, { backgroundColor: theme.colors.surface.input }]}>
-        <Icon name="magnify" size={20} color={theme.colors.icon.tertiary} />
-        <Text style={[styles.searchPlaceholder, { color: theme.colors.text.placeholder }]}>
+      <View style={[styles.searchContainer, { backgroundColor: colors.foreground }]}>
+        <Icon name="magnify" size={20} color={colors.textSecondary} />
+        <Text style={[styles.searchPlaceholder, { color: colors.textSecondary }]}>
           Search barbers, salons, services
         </Text>
-        <Icon name="microphone-outline" size={20} color={theme.colors.icon.tertiary} />
+        <Icon name="microphone-outline" size={20} color={colors.textSecondary} />
       </View>
 
       {/* Verified Workers Banner */}
-      <View style={[styles.banner, { backgroundColor: theme.colors.surface.banner }]}>
-        <Icon name="shield-check" size={20} color={theme.colors.text.onTeal} />
-        <Text style={[styles.bannerText, { color: theme.colors.text.onTeal }]}>
+      <View style={[styles.banner, { backgroundColor: colors.primary }]}>
+        <Icon name="shield-check" size={20} color="#FFFFFF" />
+        <Text style={[styles.bannerText, { color: "#FFFFFF" }]}>
           Verified workers near you
         </Text>
         <TouchableOpacity>
-          <Icon name="close" size={20} color={theme.colors.text.onTeal} />
+          <Icon name="close" size={20} color="#FFFFFF" />
         </TouchableOpacity>
       </View>
 
       {/* Services Section */}
       <View style={styles.sectionHeader}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text.primary }]}>
+        <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
           Services
         </Text>
         <TouchableOpacity>
-          <Text style={[styles.seeAll, { color: theme.colors.text.link }]}>
+          <Text style={[styles.seeAll, { color: colors.link }]}>
             See All
           </Text>
         </TouchableOpacity>
@@ -76,14 +77,13 @@ export default function HomeScreen({ navigation }: any) {
         numColumns={4}
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.servicesList}
+        scrollEnabled={false} // যদি স্ক্রিনটি ScrollView এর ভেতরে থাকে
         renderItem={({ item }) => (
-          <TouchableOpacity 
-            style={[styles.serviceCard, { backgroundColor: theme.colors.background.tertiary }]}
-          >
-            <View style={[styles.iconContainer, { backgroundColor: theme.colors.background.tertiary }]}>
-              <Icon name={item.icon} size={28} color={theme.colors.icon.primary} />
+          <TouchableOpacity style={styles.serviceCard}>
+            <View style={[styles.iconContainer, { backgroundColor: colors.foreground }]}>
+              <Icon name={item.icon} size={28} color={colors.primary} />
             </View>
-            <Text style={[styles.serviceName, { color: theme.colors.text.primary }]}>
+            <Text style={[styles.serviceName, { color: colors.textPrimary }]}>
               {item.name}
             </Text>
           </TouchableOpacity>
@@ -92,32 +92,30 @@ export default function HomeScreen({ navigation }: any) {
 
       {/* Nearby Helpers Section */}
       <View style={styles.sectionHeader}>
-        <Text style={[styles.sectionTitle, { color: theme.colors.text.primary }]}>
+        <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
           Nearby Helpers
         </Text>
         <TouchableOpacity>
-          <Text style={[styles.seeAll, { color: theme.colors.text.link }]}>
+          <Text style={[styles.seeAll, { color: colors.link }]}>
             See All
           </Text>
         </TouchableOpacity>
       </View>
 
-      {/* Helper Cards - You can add FlatList here */}
-    </SafeAreaProvider>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 20,
   },
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 16,
-    marginBottom: 16,
+    paddingVertical: 10,
   },
   locationContainer: {
     flexDirection: "row",
@@ -126,7 +124,7 @@ const styles = StyleSheet.create({
   },
   locationText: {
     fontSize: 14,
-    fontWeight: "500",
+    fontWeight: "600",
   },
   headerIcons: {
     flexDirection: "row",
@@ -143,7 +141,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     borderRadius: 12,
     gap: 8,
-    marginBottom: 16,
+    marginVertical: 16,
   },
   searchPlaceholder: {
     flex: 1,
@@ -177,27 +175,30 @@ const styles = StyleSheet.create({
   },
   seeAll: {
     fontSize: 14,
-    fontWeight: "500",
+    fontWeight: "600",
   },
   servicesList: {
     paddingHorizontal: 8,
-    marginBottom: 24,
+    paddingBottom: 20,
   },
   serviceCard: {
     flex: 1,
     margin: 8,
-    padding: 16,
-    borderRadius: 16,
     alignItems: "center",
     gap: 8,
-    minWidth: 80,
   },
   iconContainer: {
-    width: 48,
-    height: 48,
-    borderRadius: 12,
+    width: 60,
+    height: 60,
+    borderRadius: 16,
     justifyContent: "center",
     alignItems: "center",
+    // Shadow property for light mode
+    elevation: 2,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
   },
   serviceName: {
     fontSize: 12,
